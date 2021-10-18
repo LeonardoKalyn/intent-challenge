@@ -12,7 +12,7 @@ function Recipes () {
   const recipes = getRecipes();
 
   const handleClick = (recipe: Recipe) => {
-    history.push(`/edit/${recipe.id}`, { recipe });
+    history.push(`/view/${recipe.id}`, { recipe });
   };
 
   const handleSecretRecipes = () => {
@@ -52,7 +52,7 @@ function Recipes () {
             <div className={classes.options}>
               <button
                 className={classes.recipeItem}
-                onClick={() => history.push('/new-recipe')}
+                onClick={() => history.push('/add')}
               >
                 <p className={classes.recipesTitle}>
                   Add a new Recipe!

@@ -12,13 +12,12 @@ type StateType = {
   recipe: Recipe
 };
 
-
 function EditRecipe () {
   const classes = styles();
   const history = useHistory<StateType>();
   const match = useRouteMatch<MatchType>();
 
-  const currentRecipe = history.location.state.recipe || getRecipeById(match.params.id);
+  const currentRecipe = history.location.state?.recipe || getRecipeById(match.params.id);
 
   const  onSubmit = (data: FormValues) => {
     const recipe: Recipe = {
@@ -28,7 +27,7 @@ function EditRecipe () {
     };
 
     editRecipe(recipe);
-    history.push('/');
+    history.push(`/view/${recipe.id}`, { recipe });
   };
 
   return (
