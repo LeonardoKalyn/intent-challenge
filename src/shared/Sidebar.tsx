@@ -37,12 +37,12 @@ function Sidebar ({showSidebar}: SidebarProps) {
 
 const styles = createUseStyles({
   container: ({showSidebar}: SidebarProps) => ({
-    backgroundColor: '#20b2aa',
+    backgroundColor: '#242729',
     width: '95vw',
     position: 'fixed',
     zIndex: 1,
     padding: 16,
-    boxShadow: showSidebar ? '3px 0 3px #888888' : 'none',
+    boxShadow: showSidebar ? '3px 0 3px #181a1b' : 'none',
     top: 60,
     bottom: 0,
     transform: [`translateX(${showSidebar ? 0 : '-95vw'})`],
@@ -62,7 +62,7 @@ const styles = createUseStyles({
   link: {
     fontFamily: 'Poppins',
     display: 'flex',
-    color: '#282a2b',
+    color: '#fff',
   },
 
   [TABLET]: {
@@ -95,9 +95,6 @@ const styles = createUseStyles({
     profileImage: {
       alignSelf: 'center',
     },
-    link: {
-      color: '#ffffff',
-    }
   },
 });
 

@@ -1,4 +1,5 @@
 import Recipe from './RecipeType';
+import secretRecipes from './sercret-recipes';
 
 const RECIPES_PATH = '@ricetta/recipes';
 
@@ -6,6 +7,14 @@ export function addRecipe(recipe: Recipe) {
   const recipes = getRecipes();
   recipes.push(recipe);
   localStorage.setItem(RECIPES_PATH, JSON.stringify(recipes));
+};
+
+export function addSecretRecipes() {
+  const recipes = getRecipes();
+  localStorage.setItem(RECIPES_PATH, JSON.stringify([
+    ...recipes,
+    ...secretRecipes,
+  ]));
 };
 
 export function getRecipes() : Recipe[] {
@@ -55,6 +64,7 @@ export function deleteRecipe(id: string) {
 
 const recipesStore = {
   addRecipe,
+  addSecretRecipes,
   getRecipes,
   getRecipeById,
   editRecipe,
