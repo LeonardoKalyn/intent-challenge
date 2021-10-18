@@ -1,38 +1,46 @@
 import { createUseStyles } from 'react-jss';
-import { useHistory } from 'react-router';
-import { v4 as uuidv4 } from 'uuid';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 import { TABLET } from '../shared/break-points';
-import { addRecipe } from './store';
+import { editRecipe, getRecipeById } from './store';
 import Recipe from './RecipeType';
-import RecipeForm from './RecipeForm';
+import RecipeForm, { FormValues } from './RecipeForm';
 
-type FormValues = {
-  name: 'string';
-  ingredients: {value: string}[];
+type MatchType = {
+  id: string;
+};
+type StateType = {
+  recipe: Recipe
 };
 
-function NewRecipe () {
+
+function EditRecipe () {
   const classes = styles();
-  const history = useHistory();
+  const history = useHistory<StateType>();
+  const match = useRouteMatch<MatchType>();
+
+  const currentRecipe = history.location.state.recipe || getRecipeById(match.params.id);
 
   const  onSubmit = (data: FormValues) => {
     const recipe: Recipe = {
-      id: uuidv4(),
+      id: data.id,
       name: data.name,
       ingredients: data.ingredients.map(ingredient => ingredient.value),
     };
 
-    addRecipe(recipe);
+    editRecipe(recipe);
     history.push('/');
   };
 
   return (
     <section className={classes.container}>
       <h1 className={classes.title}>
-        New Recipe
+        Edit Recipe
       </h1>
 
-      <RecipeForm onSubmit={onSubmit} />
+      <RecipeForm
+        onSubmit={onSubmit}
+        initialValues={currentRecipe}
+      />
     </section>
   );
 };
@@ -58,4 +66,4 @@ const styles = createUseStyles({
   },
 });
 
-export default NewRecipe;
+export default EditRecipe;

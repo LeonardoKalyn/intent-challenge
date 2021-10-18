@@ -12,7 +12,7 @@ function Recipes () {
   const recipes = getRecipes();
 
   const handleClick = (recipe: Recipe) => {
-    history.push(`/recipe/${recipe.id}`, { recipe });
+    history.push(`/edit/${recipe.id}`, { recipe });
   };
 
   const handleSecretRecipes = () => {
