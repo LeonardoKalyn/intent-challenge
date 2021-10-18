@@ -1,13 +1,15 @@
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { createUseStyles } from 'react-jss';
 import { TABLET, LAPTOP } from './break-points';
 
 type SidebarProps = {
   showSidebar: boolean;
+  closeSidebar: () => void;
 };
 
-function Sidebar ({showSidebar}: SidebarProps) {
+function Sidebar ({showSidebar, closeSidebar}: SidebarProps) {
   const classes = styles({ showSidebar });
+  const history = useHistory();
 
   const linksList = [
     {
@@ -15,7 +17,7 @@ function Sidebar ({showSidebar}: SidebarProps) {
       text: 'All Recipes',
     },
     {
-      to: '/new',
+      to: '/add',
       text: 'Add Recipe',
     },
   ];
@@ -25,9 +27,15 @@ function Sidebar ({showSidebar}: SidebarProps) {
       <ul className={classes.list}>
         {linksList.map(({to, text}, index) => (
           <li key={index} className={classes.listItem}>
-            <Link to={to} className={classes.link}>
+            <button
+              className={classes.link}
+              onClick={() => {
+                history.push(to);
+                closeSidebar();
+              }}
+            >
               {text}
-            </Link>
+            </button>
           </li>
         ))}
       </ul>
@@ -35,8 +43,12 @@ function Sidebar ({showSidebar}: SidebarProps) {
   );
 };
 
+type StyleProps = {
+  showSidebar: boolean;
+};
+
 const styles = createUseStyles({
-  container: ({showSidebar}: SidebarProps) => ({
+  container: ({showSidebar}: StyleProps) => ({
     backgroundColor: '#242729',
     width: '95vw',
     position: 'fixed',
@@ -66,7 +78,7 @@ const styles = createUseStyles({
   },
 
   [TABLET]: {
-    container: ({showSidebar}: SidebarProps) => ({
+    container: ({showSidebar}: StyleProps) => ({
       width: '60vw',
       padding: 22,
       top: 90,

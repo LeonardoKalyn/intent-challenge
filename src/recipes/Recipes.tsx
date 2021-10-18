@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-globals */
 import { createUseStyles } from 'react-jss';
 import { useHistory } from 'react-router';
-import { TABLET, LAPTOP, DESKTOP } from '../shared/break-points';
+import { TABLET, DESKTOP } from '../shared/break-points';
 import { getRecipes, addSecretRecipes } from './store';
 import Recipe from './RecipeType';
 
@@ -29,9 +29,9 @@ function Recipes () {
       { recipes.length
         ? (
           <div className={classes.recipesGrid}>
-            {recipes.map((recipe, index) => (
+            {recipes.map((recipe) => (
               <button
-                key={index}
+                key={recipe.id}
                 className={classes.recipeItem}
                 onClick={() => handleClick(recipe)}
               >
@@ -78,10 +78,8 @@ const styles = createUseStyles({
   container: {
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: 'rgba(255,255,255,0.7)',
     flex: 1,
-    padding: '16px 22px',
-    borderRadius: 4,
+    padding: 16,
   },
   title: {
     fontSize: '22px',
@@ -133,24 +131,12 @@ const styles = createUseStyles({
   },
 
   [TABLET]: {
-    background: {
-      height: 350,
-    },
-    backgroundGradient: {
-      height: 351,
-    },
     container: {
       padding: '16px 22px',
     },
     recipesGrid: {
       gridTemplateColumns: '1fr 1fr 1fr',
       columnGap: 16,
-    },
-  },
-
-  [LAPTOP]: {
-    background: {
-      width: '100%',
     },
   },
 

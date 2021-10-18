@@ -16,11 +16,14 @@ const Layout = ({children}: LayoutProps) => {
   function toggleSidebar() {
     setShowSidebar(!showSidebar);
   };
+  function closeSidebar() {
+    setShowSidebar(false);
+  };
 
   return (
     <div className={classes.layout}>
       <Header toggleSidebar={toggleSidebar} />
-      <Sidebar showSidebar={showSidebar} />
+      <Sidebar showSidebar={showSidebar} closeSidebar={closeSidebar} />
       <div className={classes.container}>
         <div className={classes.background}/>
         <div className={classes.backgroundGradient}/>
@@ -46,16 +49,16 @@ const styles = createUseStyles({
     display: 'flex',
     flex: 1,
     width: '100%',
-    height: '100vh',
+    overflow: 'scroll',
   },
   content: {
+    backgroundColor: 'rgba(255,255,255,0.7)',
     position: 'relative',
     display: 'flex',
     flexDirection: 'column',
     flex: 1,
-    overflow: 'scroll',
-    marginTop: 150,
-    paddingTop: 16,
+    marginTop: 166,
+    borderRadius: 4,
   },
   background: {
     position: 'absolute',
@@ -87,8 +90,7 @@ const styles = createUseStyles({
       height: 351,
     },
     content: {
-      marginTop: 250,
-      padding: '16px 22px',
+      margin: '266px 22px 16px',
     },
     recipesGrid: {
       gridTemplateColumns: '1fr 1fr 1fr',
@@ -102,6 +104,9 @@ const styles = createUseStyles({
       gridTemplateColumns: '300px auto',
       gridTemplateRows: '200px auto',
       gridTemplateAreas: '"header content" "sidebar content"',
+    },
+    container: {
+      height: '100vh',
     },
     content: {
       gridArea: 'content',
