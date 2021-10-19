@@ -23,7 +23,7 @@ const schema = yup.object().shape({
     yup.object().shape({
       value: yup.string().required('Ingredients can\'t be empty!'),
     })
-  ).min(1, 'Recipes need ingredients!').required('Recipes need ingredients gaga!'),
+  ).min(1, 'Recipes need ingredients!').required('Recipes need ingredients!'),
 }).required();
 
 function RecipeForm ({onSubmit, initialValues}: FormProps) {
@@ -54,7 +54,11 @@ function RecipeForm ({onSubmit, initialValues}: FormProps) {
   });
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
+    <form
+      onSubmit={handleSubmit((data) => onSubmit(data))}
+      className={classes.form}
+      data-testid="form"
+    >
       <label className={classes.label}>
         Name:
       </label>
@@ -62,8 +66,14 @@ function RecipeForm ({onSubmit, initialValues}: FormProps) {
         errors={errors}
         name="name"
         as={<span className={classes.errorMessage}/>}
+        data-testid="name-error-message"
+        role="alert"
       />
-      <input className={classes.input} {...register('name')} />
+      <input
+        className={classes.input}
+        {...register('name')}
+        data-testid="name-input"
+      />
 
       <label className={classes.label}>
         Ingredients:
@@ -72,23 +82,29 @@ function RecipeForm ({onSubmit, initialValues}: FormProps) {
         errors={errors}
         name="ingredients"
         as={<span className={classes.errorMessage}/>}
+        data-testid="ingredients-error-message"
+        role="alert"
       />
       {fields.map((field, index) => (
-        <div key={field.id}>
+        <div key={field.id} data-testid="ingredients">
           <ErrorMessage
             errors={errors}
             name={`ingredients.${index}.value`}
             as={<span className={classes.errorMessage}/>}
+            data-testid={`ingredients-${index}-error-message`}
+            role="alert"
           />
           <div className={classes.inputLine}>
             <input
               className={classes.input}
               {...register(`ingredients.${index}.value` as const)}
+              data-testid={`ingredients-${index}-input`}
             />
             <button
               type="button"
               className={classes.removeButton}
               onClick={() => remove(index)}
+              data-testid={`ingredients-${index}-remove-button`}
             >
               X
             </button>
@@ -101,11 +117,16 @@ function RecipeForm ({onSubmit, initialValues}: FormProps) {
           type="button"
           className={classes.addIngredient}
           onClick={() => append({value: ''})}
+          data-testid="add-ingredient-button"
         >
           Add Ingredient
         </button>
 
-        <button className={classes.submitButton} type="submit">
+        <button
+          className={classes.submitButton}
+          type="submit"
+          data-testid="submit-button"
+        >
           Save Recipe
         </button>
       </div>
